@@ -1,0 +1,101 @@
+{
+  "name": "zapcon",
+  "version": "1.0.0",
+  "main": "main.js",
+  "type": "module",
+  "homepage": "./",
+  "scripts": {
+    "electron": "electron main.js",
+    "electron-dev": "set ELECTRON_IS_DEV=true && react-scripts build && electron main.js",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "clean-dist": "rimraf dist",
+    "dist": "react-scripts build && electron-builder",
+    "release-win": "react-scripts build && electron-builder --win --x64",
+    "release-macos": "react-scripts build && electron-builder --mac dmg",
+    "release-linux": "react-scripts build && electron-builder --linux AppImage",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "author": "technosez",
+  "license": "MIT",
+  "description": "SSH Connection Manager built with Electron and React",
+  "engines": {
+    "node": "22.14.0"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "5.0.1"
+  },
+  "devDependencies": {
+    "electron": "^38.2.0",
+    "electron-builder": "^26.0.12",
+    "rimraf": "^6.0.1"
+  },
+  "build": {
+    "appId": "com.technosez.zapcon",
+    "productName": "ZapCon",
+    "extends": null,
+    "directories": {
+      "output": "release",
+      "buildResources": "assets"
+    },
+    "files": [
+      "build/**/*",
+      "main.js",
+      "preload.cjs",
+      "assets/**/*",
+      "data/**/*",
+      "public/logo.png",
+      "package.json",
+      "!src/",
+      "!public/index.html",
+      "!yarn.lock",
+      "!node_modules/",
+      "!**/nul",
+      "!ssh_*.bat",
+      "!start-electron.bat",
+      "!*.tmp",
+      "!*.temp"
+    ],
+    "extraResources": [
+      {
+        "from": "assets/",
+        "to": "assets/",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "assets/logo.png"
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "assets/logo.png"
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "assets/logo.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "afterSign": "after-sign-hook.cjs"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
